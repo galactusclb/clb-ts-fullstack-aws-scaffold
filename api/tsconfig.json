@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "target": "ES2023",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "lib": ["ES2023"],
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
+        "declaration": false,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "isolatedModules": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "paths": {
+            "@/utils/*": ["./src/utils/*"],
+            "@/features/*": ["./src/features/*"],
+            "@/middleware/*": ["./src/middleware/*"],
+            "@/schemas/*": ["./src/schemas/*"],
+            "@/lib/*": ["./src/lib/*"],
+            "@/prisma/client": ["./src/lib/prisma/generated/client.ts"]
+        }
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
+}
