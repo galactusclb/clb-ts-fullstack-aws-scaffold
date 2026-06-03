@@ -5,12 +5,14 @@ import { paginationSchema } from '@/schemas/pagination.schema.ts';
 export const createPostSchema = z.object({
     title: z.string().min(1).max(255),
     body: z.string().min(1),
+    coverImageUrl: z.string().url().optional(),
     published: z.boolean().optional().default(false),
 });
 
 export const updatePostSchema = z.object({
     title: z.string().min(1).max(255).optional(),
     body: z.string().min(1).optional(),
+    coverImageUrl: z.string().url().optional(),
     published: z.boolean().optional(),
 });
 
