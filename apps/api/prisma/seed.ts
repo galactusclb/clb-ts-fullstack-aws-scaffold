@@ -2,9 +2,7 @@ import 'dotenv/config';
 
 import bcrypt from 'bcrypt';
 
-import { PrismaClient } from '../src/lib/prisma/generated/client.ts';
-
-const prisma = new PrismaClient();
+import prisma from '../src/lib/prisma/prisma.js';
 
 async function main() {
     const passwordHash = await bcrypt.hash('password123', 12);
