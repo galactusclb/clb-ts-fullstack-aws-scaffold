@@ -4,7 +4,7 @@ import type { Redis as RedisClient } from 'ioredis';
 
 const memory = new LRUCache<string, string>({
     max: 1000,
-    ttl: 60 * 60 * 24 * 7 * 1000, // 7 days in ms
+    ttl: 60 * 60 * 27 * 7,
 });
 
 export async function kvGet(

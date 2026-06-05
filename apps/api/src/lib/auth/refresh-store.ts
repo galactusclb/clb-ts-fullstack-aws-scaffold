@@ -8,7 +8,7 @@ export type RefreshSession = {
     sessionId: string;
 };
 
-const REFRESH_TTL_SECONDS = 7 * 24 * 60 * 60; // 7 days
+const REFRESH_TTL_SECONDS = 7 * 24 * 60 * 60; // 7d
 const KEY_PREFIX = 'auth:refresh:';
 
 function keyForHash(hash: string) {

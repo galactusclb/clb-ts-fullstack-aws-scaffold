@@ -1,10 +1,9 @@
 import { LRUCache } from 'lru-cache';
 
+import { redisClient } from './redis-client';
+
 import { logger } from '@/lib/logger';
 import { ServiceUnavailableError } from '@/utils/errors/http-error';
-
-import { redisClient } from './redis-client.ts';
-
 class FetcherError {
     constructor(public cause: unknown) {}
 }
@@ -21,9 +20,9 @@ type SwrOptions = {
 };
 
 const initOptions: Required<SwrOptions> = {
-    redis_fresh_ttl: 60,
-    redis_stale_ttl: 300,
-    lockTtl: 10,
+    redis_fresh_ttl: 60, //1min
+    redis_stale_ttl: 300, //5min
+    lockTtl: 10, //10s
 };
 
 const l2 = new LRUCache<string, string>({
@@ -35,7 +34,7 @@ export async function swrCache<T>(
     key: string,
     fetcher: () => Promise<T>,
     opts: SwrOptions = initOptions
-): Promise<T> {
+) {
     try {
         const cached = await redisClient?.get(key);
 
@@ -63,10 +62,10 @@ export async function swrCache<T>(
 
 async function refresh<T>(key: string, fetcher: () => Promise<T>, opts: SwrOptions): Promise<T> {
     const maxLockTtlMs = (opts.lockTtl ?? initOptions.lockTtl) * 1000;
-    const minRetryIntervalMs = 30;
-    const maxRetryIntervalMs = 1000;
+    const minRetryIntervalMs = 30; //fetcher duration - min
+    const maxRetryIntervalMs = 1000; //fetcher duration - max
     const maxRetryCount = 20;
-    const jitterMs = 50;
+    const jitterMs = 50; // de-sync simultaneous retries
 
     for (let attempt = 0; attempt < maxRetryCount; attempt++) {
         let result: T | null;
@@ -76,6 +75,7 @@ async function refresh<T>(key: string, fetcher: () => Promise<T>, opts: SwrOptio
                 key,
                 async () => {
                     let data: T;
+
                     try {
                         data = await fetcher();
                     } catch (cause) {
@@ -87,10 +87,9 @@ async function refresh<T>(key: string, fetcher: () => Promise<T>, opts: SwrOptio
                             data,
                             freshUntil: Date.now() + opts.redis_fresh_ttl * 1000,
                         };
+
                         await redisClient?.setex(key, opts.redis_stale_ttl, JSON.stringify(entry));
-                    } catch {
-                        // Redis write failure is non-fatal
-                    }
+                    } catch {}
 
                     return data;
                 },
@@ -104,6 +103,7 @@ async function refresh<T>(key: string, fetcher: () => Promise<T>, opts: SwrOptio
         if (result !== null) return result;
 
         let cached: string | null | undefined;
+
         try {
             cached = await redisClient?.get(key);
         } catch {
@@ -140,11 +140,7 @@ export async function withLock<T>(
 
 const l2Inflight = new Map<string, Promise<unknown>>();
 
-async function lruHit<T>(
-    key: string,
-    fetcher: () => Promise<T>,
-    opts: SwrOptions = initOptions
-): Promise<T> {
+async function lruHit<T>(key: string, fetcher: () => Promise<T>, opts: SwrOptions = initOptions) {
     const l2Hit = l2.get(key);
     if (l2Hit) return (JSON.parse(l2Hit) as CachedValue<T>).data;
 

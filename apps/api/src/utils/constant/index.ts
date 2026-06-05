@@ -1,25 +1,25 @@
-import { cacheConfig } from './cache.ts';
-import { Role } from './role.ts';
+import { cacheConfig } from './cache';
+import { RoleList } from './role';
 
 export const constants = {
     NODE_ENV: process.env.NODE_ENV === 'production',
-
     auth: {
-        ACCESS_SECRET: process.env.ACCESS_SECRET ?? 'change-me-access-secret',
-        REFRESH_SECRET: process.env.REFRESH_SECRET ?? 'change-me-refresh-secret',
-        GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID ?? '',
-        GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET ?? '',
-        GOOGLE_REDIRECT_URI:
-            process.env.GOOGLE_REDIRECT_URI ?? 'http://localhost:4000/api/auth/google/callback',
+        ACCESS_SECRET: process.env.ACCESS_SECRET,
+        REFRESH_SECRET: process.env.REFRESH_SECRET,
     },
-
     aws: {
         xray: {
-            enabled: process.env.AWS_XRAY_ENABLED === 'true',
-            serviceName: process.env.AWS_XRAY_SERVICE_NAME ?? 'scaffold-api',
+            enabled: process.env.AWS_XRAY_ENABLED ?? false,
+            serviceName: process.env.AWS_XRAY_SERVICE_NAME ?? 'launchzap-api',
         },
     },
-
+    message: {
+        validation: {
+            required: 'This field is required',
+            emailInvalid: 'Please enter a valid email',
+            nameTooShort: 'Name must be at least 2 characters',
+        },
+    },
+    role: RoleList,
     cache: cacheConfig,
-    role: Role,
-} as const;
+};

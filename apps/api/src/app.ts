@@ -5,9 +5,8 @@ import rateLimit from 'express-rate-limit';
 
 import { routes as authRoutes } from '@/features/auth';
 import { routes as postRoutes } from '@/features/post';
+import { configureXray, xrayClose, xrayOpen } from '@/lib/aws/xray';
 import { errorHandler } from '@/middleware/error.middleware.ts';
-
-import { configureXray, xrayClose, xrayOpen } from './lib/aws/xray.ts';
 
 const app = express();
 const apiRouter = express.Router();

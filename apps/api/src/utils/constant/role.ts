@@ -1,6 +1,5 @@
-export enum Role {
-    USER = 'USER',
-    ADMIN = 'ADMIN',
-}
+import { Roles, User } from '@/prisma/client';
 
-export type RoleType = keyof typeof Role;
+// export const Roles = ['USER', 'ADMIN'] as const;
+export const RoleList = Roles;
+export type Role = User['role'];

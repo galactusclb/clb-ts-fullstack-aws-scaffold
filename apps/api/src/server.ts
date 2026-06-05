@@ -1,6 +1,7 @@
+import { logger } from '@/lib/logger';
+import { getRedisClient } from '@/lib/redis/redis-client.ts';
+
 import app from './app.ts';
-import { logger } from './lib/logger/index.ts';
-import { getRedisClient } from './lib/redis/redis-client.ts';
 
 const PORT = process.env.PORT || 4000;
 

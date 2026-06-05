@@ -3,7 +3,7 @@ import pino from 'pino';
 type LogData = Record<string, unknown>;
 
 const _pino = pino({
-    level: process.env.LOG_LEVEL ?? 'trace',
+    level: process.env.LOG_LEVEL ?? 'info',
     transport: process.env.NODE_ENV !== 'production' ? { target: 'pino-pretty' } : undefined,
 });
 

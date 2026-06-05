@@ -1,10 +1,10 @@
 import { Redis } from 'ioredis';
 
-import { traceAsync } from '@/lib/aws/xray';
-
 import type { Redis as RedisClient } from 'ioredis';
 
-export * as redisUtils from './utils.ts';
+import { traceAsync } from '@/lib/aws/xray';
+
+export * as redisUtils from './utils';
 
 export type RedisConfig = {
     url?: string;
@@ -43,7 +43,9 @@ export let redisClient: RedisClient | null = null;
 export function getRedisClient(config: RedisConfig): RedisClient {
     if (!redisClient) {
         redisClient = config.url
-            ? new Redis(config.url, { maxRetriesPerRequest: null })
+            ? new Redis(config.url, {
+                  maxRetriesPerRequest: null,
+              })
             : new Redis({
                   host: config.host,
                   port: config.port,

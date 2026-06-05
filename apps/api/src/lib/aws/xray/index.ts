@@ -3,11 +3,13 @@ import { ErrorRequestHandler, RequestHandler } from 'express';
 
 import { constants } from '@/utils/constant';
 
-const ENABLED = constants.aws.xray.enabled;
+const ENABLED = constants.aws.xray.enabled === 'true';
 const SERVICE_NAME = constants.aws.xray.serviceName;
 
 export function configureXray() {
+    console.log('xray is ENABLED?', ENABLED, SERVICE_NAME);
     if (!ENABLED) return;
+
     AWSXRay.config([AWSXRay.plugins.ECSPlugin]);
     AWSXRay.setContextMissingStrategy('LOG_ERROR');
 }

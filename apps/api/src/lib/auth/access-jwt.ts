@@ -15,11 +15,13 @@ export function signAccessToken(
     payload: AccessPayload,
     expiresIn: jwt.SignOptions['expiresIn'] = '15m'
 ): string {
-    if (!ACCESS_SECRET) throw new Error('ACCESS_SECRET is not set');
-    return jwt.sign(payload, ACCESS_SECRET, { expiresIn });
+    const secret = ACCESS_SECRET;
+    if (!secret) throw new Error('ACCESS_SECRET is not set');
+    return jwt.sign(payload, secret, { expiresIn });
 }
 
 export function verifyAccessToken(token: string): AccessPayload {
-    if (!ACCESS_SECRET) throw new Error('ACCESS_SECRET is not set');
-    return jwt.verify(token, ACCESS_SECRET) as AccessPayload;
+    const secret = ACCESS_SECRET;
+    if (!secret) throw new Error('ACCESS_SECRET is not set');
+    return jwt.verify(token, secret) as AccessPayload;
 }
