@@ -3,12 +3,12 @@ model User {
     email        String   @unique
     passwordHash String?
     googleId     String?  @unique
-    role         Role     @default(USER)
+    role         Roles     @default(USER)
     posts        Post[]
     createdAt    DateTime @default(now())
 }
 
-enum Role {
+enum Roles {
     USER
     ADMIN
 }

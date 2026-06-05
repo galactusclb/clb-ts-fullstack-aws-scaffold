@@ -23,14 +23,14 @@ function safeReturnTo(input: unknown): string {
 const registerHandler = async (req: Request, res: Response) => {
     const { email, password } = req.validatedBody as RegisterInput;
     const tokens = await register(email, password);
-    setAuthCookies(res, tokens.accessToken, tokens.refreshToken);
+    setAuthCookies(res, tokens);
     res.status(201).json({ success: true });
 };
 
 const loginHandler = async (req: Request, res: Response) => {
     const { email, password } = req.validatedBody as LoginInput;
     const tokens = await login(email, password);
-    setAuthCookies(res, tokens.accessToken, tokens.refreshToken);
+    setAuthCookies(res, tokens);
     res.status(200).json({ success: true });
 };
 
@@ -59,7 +59,7 @@ const refreshHandler = async (req: Request, res: Response) => {
         return;
     }
 
-    setAuthCookies(res, rotated.accessToken, rotated.refreshToken);
+    setAuthCookies(res, rotated);
     res.status(200).json({ ok: true });
 };
 
@@ -98,7 +98,7 @@ const googleCallback = async (req: Request, res: Response) => {
             return;
         }
 
-        setAuthCookies(res, result.tokens.accessToken, result.tokens.refreshToken);
+        setAuthCookies(res, result.tokens);
         res.redirect(result.redirectTo);
     } catch (err) {
         console.error('[googleCallback]', err);
