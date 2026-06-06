@@ -21,6 +21,7 @@
         "@types/jsonwebtoken": "^9.0.9",
         "@types/node": "^22.15.30",
         "@types/pg": "^8.20.0",
+        "@types/sanitize-html": "^2.16.1",
         "eslint": "^10.2.0",
         "eslint-plugin-import-x": "^4.16.2",
         "pino-pretty": "^13.1.3",
