@@ -15,11 +15,11 @@ export const DEFAULT_CACHE: CacheObj = {
 };
 
 export const cacheConfig = {
-    product: {
+    post: {
         list: {
             ...DEFAULT_CACHE,
         },
-        item: {
+        single: {
             ...DEFAULT_CACHE,
         },
     },

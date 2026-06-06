@@ -41,8 +41,8 @@ export async function listPosts(query: ListPostsQuery) {
             return paginatedResponse(posts.map(toPostDTO), total, query);
         },
         {
-            redis_fresh_ttl: postCacheCfg.list.ttl,
-            redis_stale_ttl: postCacheCfg.list.ttl + postCacheCfg.list.swr,
+            redis_fresh_ttl: postCacheCfg.list.redis_fresh_ttl,
+            redis_stale_ttl: postCacheCfg.list.redis_stale_ttl + postCacheCfg.list.header_swr,
         }
     );
 }
@@ -56,8 +56,8 @@ export async function getPost(id: string) {
             return toPostDTO(post);
         },
         {
-            redis_fresh_ttl: postCacheCfg.single.ttl,
-            redis_stale_ttl: postCacheCfg.single.ttl + postCacheCfg.single.swr,
+            redis_fresh_ttl: postCacheCfg.single.redis_fresh_ttl,
+            redis_stale_ttl: postCacheCfg.single.redis_stale_ttl + postCacheCfg.single.header_swr,
         }
     );
 }
