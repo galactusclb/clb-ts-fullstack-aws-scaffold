@@ -108,6 +108,7 @@ services:
     environment:
       API_BASE_URL: http://api:4000/api
       NEXT_PUBLIC_API_BASE_URL: http://localhost:4000/api
+      REDIS_URL: redis://redis-client:6379
       AWS_REGION: 'us-east-1'
       AWS_SECRET_MANAGER_SECRET_NAME: 'sampleapp/app-config/dev'
       AWS_CLOUDFRONT_DOMAIN: 'https://sample.com'
