@@ -69,6 +69,7 @@ services:
     ports:
       - "4000:4000"
     environment:
+      CI: "true"
       NODE_ENV: development
       DATABASE_URL: postgres://postgres:postgres@db:5432/scafold-db
       DATABASE_URL_READ: postgresql://postgres:postgres@db-replica:5432/scafold-db
