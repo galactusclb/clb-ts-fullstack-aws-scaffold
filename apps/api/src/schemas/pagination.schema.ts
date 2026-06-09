@@ -5,4 +5,10 @@ export const paginationSchema = z.object({
     limit: z.coerce.number().int().min(1).max(100).default(20),
 });
 
+export const sortSchema = z.object({
+    sortBy: z.string().optional(),
+    sortOrder: z.enum(['asc', 'desc']).default('desc'),
+});
+
 export type PaginationQuery = z.infer<typeof paginationSchema>;
+export type SortQuery = z.infer<typeof sortSchema>;

@@ -8,7 +8,7 @@ export const basePostSchema = z.object({
 });
 
 export const postResponseSchema = basePostSchema.extend({
-    id: z.number(),
+    id: z.string().cuid(),
     createdAt: z.date(),
     updatedAt: z.date(),
 });

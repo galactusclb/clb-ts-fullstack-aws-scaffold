@@ -1,18 +1,18 @@
 import { z } from 'zod';
 
-import { paginationSchema } from '@/schemas/pagination.schema.ts';
-import { basePostSchema } from '@/schemas/post.schema.ts';
+import { paginationSchema, sortSchema } from '@/schemas/pagination.schema';
+import { basePostSchema, postResponseSchema } from '@/schemas/post.schema';
 
-export type { Post } from '@/schemas/post.schema.ts';
+export type { Post } from '@/schemas/post.schema';
 
-export const postFilterSchema = paginationSchema.extend({
+export const postFilterSchema = paginationSchema.merge(sortSchema).extend({
     published: z
         .enum(['true', 'false'])
         .transform((v) => v === 'true')
         .optional(),
 });
 
-const postIdParams = z.object({ id: z.string().cuid() });
+const postIdParams = postResponseSchema.pick({id: true});
 
 export const createPostSchema = { body: basePostSchema };
 export const getPostsSchema = { query: postFilterSchema };
