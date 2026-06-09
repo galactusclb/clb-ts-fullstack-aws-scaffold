@@ -126,7 +126,7 @@ const cache = {
     return max;
   },
 
-  async updateTags(tags, durations) {
+  async updateTags(tags, _durations) {
     if (!tags.length) return;
     const now = Date.now();
     const fields = Object.fromEntries(tags.map((t) => [t, String(now)]));

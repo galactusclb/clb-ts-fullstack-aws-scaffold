@@ -93,6 +93,13 @@ const eslintConfig = defineConfig([
           alphabetize: { order: "asc", caseInsensitive: true },
         }
       ],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
     },
   },
   globalIgnores([

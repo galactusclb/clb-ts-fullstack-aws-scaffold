@@ -1,12 +1,13 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { Suspense } from 'react';
 
 import { ErrorBoundary } from '@/components/shared/errors';
 import { Spinner } from '@/components/ui/spinner';
+import { ROUTES } from '@/config/routes';
 import { getPublishedPosts } from '@/features/post/index.server';
 import { Post } from '@/models/post.schema';
-import Link from 'next/link';
-import Image from 'next/image';
-import { ROUTES } from '@/config/routes';
+
 
 async function PostList() {
     const result = await getPublishedPosts();

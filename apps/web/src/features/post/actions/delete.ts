@@ -2,8 +2,8 @@
 
 import { revalidateTag } from 'next/cache';
 
-import { apiServer } from '@/utils/api/api-server';
 import { postSingleResponseSchema } from '@/models/post.schema';
+import { apiServer } from '@/utils/api/api-server';
 
 export type DeletePostState = {
     success: boolean;
