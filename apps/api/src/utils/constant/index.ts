@@ -10,7 +10,7 @@ export const constants = {
     aws: {
         xray: {
             enabled: process.env.AWS_XRAY_ENABLED ?? false,
-            serviceName: process.env.AWS_XRAY_SERVICE_NAME ?? 'launchzap-api',
+            serviceName: process.env.AWS_XRAY_SERVICE_NAME ?? 'scafold-api',
         },
     },
     message: {
