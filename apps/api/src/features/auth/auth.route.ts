@@ -8,8 +8,8 @@ import { loginSchema, registerSchema } from './auth.schema.ts';
 
 const router = Router();
 
-router.post('/register', validate({ body: registerSchema }), authCtrl.registerHandler);
-router.post('/login', validate({ body: loginSchema }), authCtrl.loginHandler);
+router.post('/register', validate(registerSchema), authCtrl.registerHandler);
+router.post('/login', validate(loginSchema), authCtrl.loginHandler);
 router.get('/me', isAuth, authCtrl.meHandler);
 router.post('/refresh', authCtrl.refreshHandler);
 router.post('/logout', authCtrl.logoutHandler);
