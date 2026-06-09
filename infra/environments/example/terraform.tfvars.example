@@ -22,7 +22,7 @@ subnets = {
 secret_manager_name = "launchzap/app-config/dev"
 
 # S3
-s3_bucket_name = "launchzap-bucket-dev-1"
+s3_bucket_name = <bucket-name>
 
 # RDS
 postgresql_version = "17.7"
