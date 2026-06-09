@@ -1,12 +1,50 @@
 import tseslint from 'typescript-eslint';
+import boundaries from "eslint-plugin-boundaries";
 import importX from 'eslint-plugin-import-x';
 
 export default tseslint.config(tseslint.configs.recommended, {
     files: ['src/**/*.ts'],
     plugins: {
+        boundaries,
         'import-x': importX,
     },
+    settings: {
+        "boundaries/elements": [
+            {
+                type: "feature",
+                pattern: "src/features/*",
+                mode: "folder",
+                capture: ["elementName"],
+            },
+        ]
+    },
     rules: {
+        'boundaries/dependencies': [
+            'error',
+            {
+                // disallow all cross-element imports by default
+                default: "disallow",
+                rules: [
+                    {
+                        // ✅ features can import their local files
+                        from: { type: "feature" },
+                        allow: {
+                            to: { type: "feature", captured: { elementName: "{{ elementName }}" } },
+                        },
+                    },
+                ]
+            }
+        ],
+        "no-restricted-imports": ["error", {
+            patterns: [
+                {
+                    // Force feature access through the barrel (@/features/<name>),
+                    // block deep paths like @/features/post/post.service
+                    group: ["@/features/*/**"],
+                    message: "Import features through their barrel (@/features/<name>), not deep paths.",
+                },
+            ],
+        }],
         'import-x/order': [
             'warn',
             {
@@ -26,7 +64,6 @@ export default tseslint.config(tseslint.configs.recommended, {
                 alphabetize: { order: 'asc', caseInsensitive: true },
             },
         ],
-
         'import-x/no-restricted-paths': [
             'error',
             {

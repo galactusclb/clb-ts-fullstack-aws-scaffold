@@ -1,9 +1,10 @@
 import { LRUCache } from 'lru-cache';
 
-import { redisClient } from './redis-client';
 
 import { logger } from '@/lib/logger';
 import { ServiceUnavailableError } from '@/utils/errors/http-error';
+
+import { redisClient } from './redis-client';
 class FetcherError {
     constructor(public cause: unknown) {}
 }

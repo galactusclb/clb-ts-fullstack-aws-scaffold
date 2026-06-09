@@ -1,8 +1,9 @@
 import { Redis } from 'ioredis';
 
+import { traceAsync } from '@/lib/aws/xray';
+
 import type { Redis as RedisClient } from 'ioredis';
 
-import { traceAsync } from '@/lib/aws/xray';
 
 export * as redisUtils from './utils';
 
