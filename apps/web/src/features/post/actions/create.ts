@@ -49,7 +49,7 @@ export async function createPostAction(
             true
         );
 
-        revalidateTag('posts');
+        revalidateTag('posts', "max");
         return { success: true, postId: result.success ? result.data.id : undefined };
     } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to create post';

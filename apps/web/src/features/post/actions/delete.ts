@@ -13,8 +13,8 @@ export type DeletePostState = {
 export async function deletePostAction(id: string): Promise<DeletePostState> {
     try {
         await apiServer(`/posts/${id}`, postSingleResponseSchema, { method: 'DELETE' }, true);
-        revalidateTag('posts');
-        revalidateTag(`post-${id}`);
+        revalidateTag('posts', "max");
+        revalidateTag(`post-${id}`, "max");
         return { success: true };
     } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to delete post';

@@ -61,8 +61,8 @@ export async function updatePostAction(
             true
         );
 
-        revalidateTag('posts');
-        revalidateTag(`post-${id}`);
+        revalidateTag('posts', "max");
+        revalidateTag(`post-${id}`, "max");
         return { success: true };
     } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to update post';
