@@ -6,22 +6,23 @@ import { validate } from '@/middleware/validate.middleware.ts';
 import postCtrl from './post.controller.ts';
 import {
     createPostSchema,
-    listPostsSchema,
-    postIdSchema,
+    deletePostSchema,
+    getPostByIdSchema,
+    getPostsSchema,
     updatePostSchema,
 } from './post.schema.ts';
 
 const router = Router();
 
-router.get('/', validate({ query: listPostsSchema }), optionalAuth, postCtrl.list);
-router.get('/:id', validate({ params: postIdSchema }), optionalAuth, postCtrl.getOne);
-router.post('/', isAuth, validate({ body: createPostSchema }), postCtrl.create);
+router.get('/', validate(getPostsSchema), optionalAuth, postCtrl.list);
+router.get('/:id', validate(getPostByIdSchema), optionalAuth, postCtrl.getOne);
+router.post('/', isAuth, validate(createPostSchema), postCtrl.create);
 router.patch(
     '/:id',
     isAuth,
-    validate({ params: postIdSchema, body: updatePostSchema }),
+    validate(updatePostSchema),
     postCtrl.update
 );
-router.delete('/:id', isAuth, validate({ params: postIdSchema }), postCtrl.remove);
+router.delete('/:id', isAuth, validate(deletePostSchema), postCtrl.remove);
 
 export default router;

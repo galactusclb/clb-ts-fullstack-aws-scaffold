@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { logger } from '@/lib/logger/index.ts';
 import { requireAuth } from '@/middleware/auth.middleware.ts';
 
-import { CreatePostInput, ListPostsQuery, UpdatePostInput } from './post.schema.ts';
+import { CreatePostInput, ListPostsQuery, UpdatePostInput, PostIdParam } from './post.schema.ts';
 import {
     createNewPost,
     deleteExistingPost,
@@ -20,7 +20,7 @@ const list = async (req: Request, res: Response) => {
 };
 
 const getOne = async (req: Request, res: Response) => {
-    const { id } = req.validatedParams as { id: string };
+    const { id } = req.validatedParams as PostIdParam;
     const post = await getPost(id);
     res.status(200).json({ success: true, data: post });
 };
@@ -34,7 +34,7 @@ const create = async (req: Request, res: Response) => {
 
 const update = async (req: Request, res: Response) => {
     const user = requireAuth(req);
-    const { id } = req.validatedParams as { id: string };
+    const { id } = req.validatedParams as PostIdParam;
     const input = req.validatedBody as UpdatePostInput;
     const post = await updateExistingPost(id, input, user.id, user.role);
     res.status(200).json({ success: true, data: post });
@@ -42,7 +42,7 @@ const update = async (req: Request, res: Response) => {
 
 const remove = async (req: Request, res: Response) => {
     const user = requireAuth(req);
-    const { id } = req.validatedParams as { id: string };
+    const { id } = req.validatedParams as PostIdParam;
     await deleteExistingPost(id, user.id, user.role);
     res.status(204).send();
 };
