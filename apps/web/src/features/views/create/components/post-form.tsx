@@ -1,17 +1,18 @@
 'use client';
 
-import { useActionState } from 'react';
-import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { useActionState } from 'react';
 import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Spinner } from '@/components/ui/spinner';
+import { Textarea } from '@/components/ui/textarea';
 import { ROUTES } from '@/config/routes';
-import { createPostAction, type CreatePostState } from '@/features/post/actions/create';
+import { createPostAction } from '@/features/post';
+import type { CreatePostState } from '@/features/post';
 
 import CoverUpload from './cover-upload';
 
